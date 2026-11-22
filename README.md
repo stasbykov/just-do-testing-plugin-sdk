@@ -3,7 +3,7 @@
 [![CI](https://github.com/stasbykov/just-do-testing-plugin-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/stasbykov/just-do-testing-plugin-sdk/actions/workflows/ci.yml)
 [![Java 21](https://img.shields.io/badge/Java-21-blue)](https://openjdk.org/projects/jdk/21/)
 
-**Just Do Testing Plugin SDK** — открытый Java API для создания собственных **конструкторов объектов** в настольном приложении [Just Do Testing](https://github.com/stasbykov/just-do-testing).
+**Just Do Testing Plugin SDK** — открытый Java API для создания собственных **конструкторов объектов** в настольном приложении Just Do Testing.
 
 Конструктор позволяет пользователю создавать объект через удобную форму вместо ручного редактирования JSON или текста. Разработчик конструктора определяет поля и их поведение, правила проверки, зависимости от другого объекта и способ формирования итогового тела. Пользователь настраивает объект в приложении, а затем использует его в тестовых сценариях с Kafka, REST и PostgreSQL.
 
@@ -516,7 +516,6 @@ unzip -p target/order-builder-1.0.0.jar META-INF/MANIFEST.MF
 
 ## Ссылки
 
-- [Just Do Testing — приложение](https://github.com/stasbykov/just-do-testing)
 - [Полный пример плагина «Доставка»](examples/shipping-builder)
 - [Исходники API](src/main/java/io/github/stasbykov/justdotesting/plugin)
 - [Релизы SDK и пример JAR](https://github.com/stasbykov/just-do-testing-plugin-sdk/releases)
