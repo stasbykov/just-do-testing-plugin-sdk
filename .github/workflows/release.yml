@@ -84,6 +84,32 @@ jobs:
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           gpg-passphrase-env-var: MAVEN_GPG_PASSPHRASE
 
+      - name: Verify GPG signing key
+        shell: bash
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+
+          # The import step can also accept a public key. Verify that a usable private key is present.
+          if ! gpg --batch --list-secret-keys --with-colons 2>/dev/null | grep -q '^sec:'; then
+            echo "::error::No GPG private key is available for signing. Check MAVEN_GPG_PRIVATE_KEY in the maven-central environment; it must contain an ASCII-armored PRIVATE key, not a public key."
+            exit 1
+          fi
+
+          # Test signing without printing the passphrase or writing an artifact to disk.
+          if ! printf 'GPG signing check\n' | gpg \
+            --batch \
+            --yes \
+            --pinentry-mode loopback \
+            --passphrase-fd 3 \
+            --detach-sign \
+            --output /dev/null \
+            3<<<"$MAVEN_GPG_PASSPHRASE" 2>/dev/null; then
+            echo "::error::GPG test signature failed. Verify that the private key can sign and MAVEN_GPG_PASSPHRASE is correct."
+            exit 1
+          fi
+
       - name: Validate Maven version
         shell: bash
         env:
