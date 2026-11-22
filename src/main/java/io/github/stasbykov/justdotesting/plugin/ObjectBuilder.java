@@ -14,7 +14,7 @@ public interface ObjectBuilder {
             Objects.requireNonNull(format);
         }
     }
-    /** Данные редактора: настройки конструктора или буквальное тело ручного объекта. */
+    /** Editor data: builder settings or the literal body of a manually defined object. */
     record Parent(UUID id, String name, String pluginId, String typeId, int version, JsonNode values) {
         public Parent { values = values.deepCopy(); }
         @Override public JsonNode values() { return values.deepCopy(); }
