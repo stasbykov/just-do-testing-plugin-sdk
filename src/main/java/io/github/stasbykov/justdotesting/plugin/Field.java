@@ -3,7 +3,7 @@ package io.github.stasbykov.justdotesting.plugin;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.*;
 
-/** Ключ относится к текущей строке или корню настроек. GROUP только группирует поля визуально. */
+/** The key refers to the current row or the root of the settings. GROUP only groups fields visually. */
 public record Field(Kind kind, String key, String label, boolean required, boolean editable,
                     List<Option> options, List<Field> children, ObjectNode rowDefaults) {
     public enum Kind { TEXT, NUMBER, CHOICE, CHECK, GROUP, ROWS }
