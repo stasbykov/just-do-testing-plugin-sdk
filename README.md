@@ -49,28 +49,25 @@
 - **Склад** — позволяет выбрать зону доставки.
 - **Партия отправлений** — может ссылаться на «Склад», предлагает зависящие от него варианты доставки, поддерживает список мест, страховку и вычисление общего количества.
 
-### 1. Соберите пример
+### 1. Получите JAR примера
 
-Понадобятся **JDK 21** и Maven **3.9+**. Репозиторий содержит Maven Wrapper, поэтому отдельно устанавливать Maven необязательно.
+Готовый плагин `shipping-builder.jar` можно взять в [GitHub Releases](https://github.com/stasbykov/just-do-testing-plugin-sdk/releases) (релиз `v1.0.0`).
+
+Если хотите изучить исходники и собрать пример самостоятельно, понадобятся **JDK 21** и Maven **3.9+**. Maven Wrapper уже включён в репозиторий:
 
 ```bash
 git clone https://github.com/stasbykov/just-do-testing-plugin-sdk.git
 cd just-do-testing-plugin-sdk
-
-# Сначала устанавливаем API SDK в локальный Maven-репозиторий
-./mvnw clean install
-
-# Затем собираем отдельный JAR примера
 ./mvnw -f examples/shipping-builder/pom.xml clean verify
 ```
 
-В Windows вместо `./mvnw` используйте `mvnw.cmd`. Результат второй сборки:
+В Windows вместо `./mvnw` используйте `mvnw.cmd`. Результат сборки:
 
 ```text
 examples/shipping-builder/target/shipping-builder.jar
 ```
 
-Если версия SDK уже опубликована, собирать её исходники для разработки своего плагина необязательно — достаточно добавить зависимость из Maven Central. Наличие опубликованных версий проверяйте в [GitHub Releases](https://github.com/stasbykov/just-do-testing-plugin-sdk/releases). **Если нужной версии ещё нет в Maven Central, используйте локальную сборку выше**.
+Пример подключает **SDK 1.0.0 из Maven Central**. Отдельно собирать SDK не требуется.
 
 ### 2. Установите плагин в Just Do Testing
 
@@ -153,7 +150,7 @@ order-builder/
 
 **Почему `provided`?** Контракт SDK и Jackson уже предоставляются приложением. Их не нужно повторно упаковывать в плагин: так меньше риск несовместимых копий классов.
 
-Версия `1.0.0` в POM выше соответствует исходникам этого репозитория. Если она ещё не опубликована, предварительно выполните `./mvnw clean install` в репозитории SDK. Если используете другую выпущенную версию, укажите именно её.
+**Актуальная версия SDK — `1.0.0`.** Maven загрузит зависимость `io.github.stasbykov.justdotesting:scenario-plugin-api:1.0.0` из Maven Central. Для разработки плагина достаточно добавить зависимость из примера выше. При обновлении указывайте нужную совместимую версию SDK.
 
 ### Шаг 2. Реализуйте `ObjectBuilder`
 
@@ -509,7 +506,7 @@ jar tf target/order-builder-1.0.0.jar
 unzip -p target/order-builder-1.0.0.jar META-INF/MANIFEST.MF
 ```
 
-Если Maven не находит `scenario-plugin-api`, проверьте доступность нужной версии в Maven Central. Для работы до публикации соберите исходники SDK с `./mvnw clean install` — это добавит артефакт в локальный репозиторий Maven.
+Если Maven не находит `scenario-plugin-api`, убедитесь, что указан артефакт `io.github.stasbykov.justdotesting:scenario-plugin-api:1.0.0`, Maven Central доступен и в настройках Maven нет блокирующего зеркала или офлайн-режима.
 
 ## Для сопровождающих SDK
 
